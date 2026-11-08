@@ -86,7 +86,7 @@ Todo esto se corrige en un único sitio, `normalizeProduct.js` (capa anticorrupc
 ## Tests
 
 ```bash
-npm test   # 49 tests, ~4 s
+npm test   # 49 tests, ~5 s
 ```
 
 | Fichero | Qué cubre |
