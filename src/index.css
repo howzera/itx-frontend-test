@@ -156,7 +156,9 @@ main.container {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 0 1 380px;
+  flex: 1 1 260px;
+  max-width: 440px;
+  min-width: 0;
 }
 
 .search__input {
@@ -480,6 +482,11 @@ main.container {
 
   .header__logo {
     flex: 1;
+  }
+
+  .search {
+    flex-basis: 100%;
+    max-width: none;
   }
 }
 
