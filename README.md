@@ -4,21 +4,58 @@ Mini-aplicación SPA para comprar dispositivos móviles: listado con búsqueda e
 
 React 19 + JavaScript (ES6, sin TypeScript) + Vite + React Router. Tests con Vitest y Testing Library.
 
-## Ejecución
+## Guía rápida: ejecución y pruebas
 
-Requisitos: Node.js 20 o superior.
+### Puertos en localhost
 
-```bash
-npm install
-npm start        # modo desarrollo: http://localhost:5173
-npm run build    # compilación de producción en dist/
-npm test         # 49 tests
-npm run lint     # ESLint
-```
+| Puerto | Servicio |
+|---|---|
+| **5173** | Esta aplicación (`npm start`, servidor de Vite) |
+| - | API externa: `https://itx-frontend-test.onrender.com/api` |
 
-La API por defecto es `https://itx-frontend-test.onrender.com/api`. Se puede cambiar con la variable `VITE_API_BASE_URL` (ver `.env.example`).
+> **Sin conflictos de puertos:** la [API de productos similares](https://github.com/howzera/backendDevTest) y el [servicio de notificaciones](https://github.com/howzera/ai-python-test) usan 5000, 3001 y 3000. Por eso este proyecto usa el 5173 de Vite y puede ejecutarse a la vez que cualquiera de ellos.
 
-> La API está en un plan gratuito que "se duerme": la primera petición puede tardar más de 30 s. La aplicación lo avisa tras 3 s de espera.
+### Paso a paso
+
+1. **Comprobar Node.js 20 o superior:** `node -v`
+2. **Clonar, entrar e instalar dependencias:**
+   ```bash
+   git clone https://github.com/howzera/itx-frontend-test.git
+   cd itx-frontend-test
+   npm install
+   ```
+3. **Ejecutar las comprobaciones:**
+
+   | Comando | Resultado esperado |
+   |---|---|
+   | `npm test` | 9 ficheros, **49 tests passed** (~5 s) |
+   | `npm run lint` | Sin errores |
+   | `npm run build` | Compilación de producción en `dist/` |
+
+4. **Arrancar la aplicación:** `npm start` y abrir http://localhost:5173
+
+   > La API está en un plan gratuito que "se duerme": la primera petición puede tardar más de 30 s. La aplicación lo avisa tras 3 s de espera.
+
+5. **Probar en el navegador:**
+
+   | # | Acción | Resultado esperado |
+   |---|---|---|
+   | 1 | Abrir http://localhost:5173 | Loader y después la rejilla de productos |
+   | 2 | Estrechar la ventana (o DevTools → modo móvil) | 4 → 3 → 2 → 1 columnas, sin scroll horizontal |
+   | 3 | Escribir `liquid` en el buscador | Filtra en tiempo real; la URL pasa a `/?q=liquid` |
+   | 4 | Escribir `ICONIA acer` | Mismo resultado: ignora mayúsculas, acentos y orden |
+   | 5 | Pulsar un producto | Detalle en 2 columnas; breadcrumbs "Móviles › Marca Modelo" |
+   | 6 | Revisar la descripción | Marca, modelo, precio, CPU, RAM, SO, resolución, batería, cámaras, dimensiones y peso |
+   | 7 | Producto con una sola opción | La opción aparece seleccionada |
+   | 8 | Sin elegir almacenamiento y color | "Añadir" desactivado |
+   | 9 | Elegir opciones y pulsar "Añadir" | El contador de la cabecera sube |
+   | 10 | Pulsar "Volver al listado" | Vuelve con la búsqueda conservada |
+   | 11 | Recargar (F5) | El contador se mantiene; el listado sale de la caché |
+   | 12 | DevTools → Network → recargar | Ninguna llamada a `/api/product` durante 1 hora |
+   | 13 | DevTools → Application → Local Storage | Entradas de caché con `savedAt` y el contador |
+   | 14 | Abrir `/product/xxx` | Error con "Reintentar" (la API devuelve 500) |
+
+La URL de la API se puede cambiar con la variable `VITE_API_BASE_URL` (ver `.env.example`).
 
 ## Estructura
 
