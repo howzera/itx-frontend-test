@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useCart } from '../context/useCart.js';
 import OptionSelector from './OptionSelector.jsx';
 
-/** If there is only one option, it is selected by default (requirement of the statement). */
+/** A single option is selected by default. */
 const defaultCode = (options) => (options.length === 1 ? options[0].code : null);
 
 /**
