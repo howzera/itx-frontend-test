@@ -1,4 +1,4 @@
-# ITX Front-End Test — Tienda de móviles
+# ITX Front-End Test - Tienda de móviles
 
 Mini-aplicación SPA para comprar dispositivos móviles: listado con búsqueda en tiempo real (PLP) y detalle con selección de opciones y cesta (PDP).
 
